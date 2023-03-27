@@ -4,8 +4,10 @@ leftX = 0;
 leftY = 0;
 rightX = 0;
 rightY = 0;
-score = 0;
-song = "";
+score1 = 0;
+score2 = 0;
+song1 = "";
+song2 = "";
 
 /*Commit*/
 function preload(){
@@ -26,20 +28,27 @@ function draw(){
     fill('red')
     strokeWeight(4);
     stroke('black');
-    song = music1.isPlaying();
+    song1 = music1.isPlaying();
+    song2 = music2.isPlaying();
 
-    if (score > 0.2){
-        console.log(score)
+    if (score1 > 0.2){
         arc(leftX,leftY,30,30,0,2 * Math.PI);
         music2.stop();
 
-        if (!song){
-            console.log(song)
+        if (!song1){
             music1.play();
             document.getElementById("song_name").innerHTML = "Song Name - " + "Peter Pan";
         }
-        else {
-            console.log(song)
+    }
+
+    if (score2 > 0.2){
+        fill('yellow');
+        arc(rightX,rightY,30,30,0,2 * Math.PI);
+        music1.stop();
+
+        if (!song2){
+            music2.play();
+            document.getElementById("song_name").innerHTML = "Song Name - " + "Harry Potter Theme Song";
         }
     }
 
@@ -51,7 +60,8 @@ function gotPoses(results){
         leftY = results[0].pose.leftWrist.y;
         rightX = results[0].pose.rightWrist.x;
         rightY = results[0].pose.rightWrist.y;
-        score = results[0].pose.keypoints[9].score;
+        score1 = results[0].pose.keypoints[9].score;
+        score2 = results[0].pose.keypoints[10].score;
     }
 }
 
